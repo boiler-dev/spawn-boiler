@@ -53,6 +53,12 @@ export const generate: ActionBoiler = async () => {
     sourcePath: "tsignore/spawn.ts",
   })
 
+  actions.push({
+    action: "write",
+    path: "test/spawn.spec.ts",
+    sourcePath: "tsignore/spawn.spec.ts",
+  })
+
   return actions
 }
 
