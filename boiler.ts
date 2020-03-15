@@ -5,13 +5,12 @@ import {
   BoilerPrompt,
 } from "boiler-dev"
 
-export const install: ActionBoiler = async ({
-  allAnswers,
-}) => {
+export const install: ActionBoiler = async () => {
   const actions: BoilerAction[] = []
 
   actions.push({
     action: "npmInstall",
+    dev: true,
     source: ["node-pty"],
   })
 
