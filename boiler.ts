@@ -19,13 +19,13 @@ export const prompt: PromptBoiler = async () => {
 }
 
 export const install: ActionBoiler = async ({
-  answers,
+  allAnswers,
 }) => {
   const actions: BoilerAction[] = []
 
   actions.push({
     action: "npmInstall",
-    dev: answers.nodePtyDev,
+    dev: allAnswers.nodePtyDev,
     source: ["node-pty"],
   })
 
