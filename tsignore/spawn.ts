@@ -10,6 +10,7 @@ export interface SpawnOptions {
   args?: string[]
   cwd?: string
   env?: Record<string, string>
+  stdout?: boolean
 }
 
 class Spawn {
@@ -17,7 +18,7 @@ class Spawn {
     command: string,
     options: SpawnOptions = {}
   ): Promise<SpawnOutput> {
-    const { args = [], cwd, env } = options
+    const { args = [], cwd, env, stdout } = options
 
     const cols = process.stdout.columns
     const rows = process.stdout.rows
@@ -34,6 +35,10 @@ class Spawn {
 
     pty.on("data", (data): void => {
       out += data
+
+      if (stdout) {
+        process.stdout.write(data)
+      }
     })
 
     return new Promise((resolve): void => {
