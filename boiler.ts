@@ -5,39 +5,53 @@ import {
   BoilerPrompt,
 } from "boiler-dev"
 
-export const install: ActionBoiler = async () => {
+export const prompt: PromptBoiler = async () => {
+  const prompts: BoilerPrompt[] = []
+
+  prompts.push({
+    type: "confirm",
+    name: "nodePtyDev",
+    message: "install node-pty as dev dependency?",
+    default: true,
+  })
+
+  return prompts
+}
+
+export const install: ActionBoiler = async ({
+  answers,
+}) => {
   const actions: BoilerAction[] = []
 
-  // actions.push({
-  //   action: "npmInstall",
-  //   dev: true,
-  //   source: ["some-package"],
-  // })
+  actions.push({
+    action: "npmInstall",
+    dev: answers.nodePtyDev,
+    source: ["node-pty"],
+  })
 
   return actions
 }
 
-export const prompt: PromptBoiler = async () => {
-  const prompts: BoilerPrompt[] = []
+export const uninstall: ActionBoiler = async () => {
+  const actions: BoilerAction[] = []
 
-  // prompts.push({
-  //   type: "input",
-  //   name: "someValue",
-  //   message: "some message",
-  //   default: "some default",
-  // })
+  actions.push({
+    action: "npmInstall",
+    source: ["node-pty"],
+    uninstall: true,
+  })
 
-  return prompts
+  return actions
 }
 
 export const generate: ActionBoiler = async () => {
   const actions: BoilerAction[] = []
 
-  // actions.push({
-  //   action: "write",
-  //   path: "src/someName.ts",
-  //   sourcePath: "tsignore/someName.ts",
-  // })
+  actions.push({
+    action: "write",
+    path: "src/spawn.ts",
+    sourcePath: "tsignore/spawn.ts",
+  })
 
   return actions
 }
@@ -47,18 +61,6 @@ export const absorb: ActionBoiler = async ({ writes }) => {
     action: "write",
     sourcePath: path,
     path: sourcePath,
-    modify: (src: string): string => src,
+    // modify: (src: string): string => src,
   }))
-}
-
-export const uninstall: ActionBoiler = async () => {
-  const actions: BoilerAction[] = []
-
-  // actions.push({
-  //   action: "npmUninstall",
-  //   dev: true,
-  //   source: ["some-package"],
-  // })
-
-  return actions
 }
