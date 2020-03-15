@@ -5,19 +5,6 @@ import {
   BoilerPrompt,
 } from "boiler-dev"
 
-export const prompt: PromptBoiler = async () => {
-  const prompts: BoilerPrompt[] = []
-
-  prompts.push({
-    type: "confirm",
-    name: "nodePtyDev",
-    message: "install node-pty as dev dependency?",
-    default: true,
-  })
-
-  return prompts
-}
-
 export const install: ActionBoiler = async ({
   allAnswers,
 }) => {
@@ -25,7 +12,6 @@ export const install: ActionBoiler = async ({
 
   actions.push({
     action: "npmInstall",
-    dev: allAnswers.nodePtyDev,
     source: ["node-pty"],
   })
 
